@@ -3,7 +3,7 @@ namespace projetoHospedagemHotel.models
     public class Reserva
     {
         public Reserva(Suite suite, Pessoa responsavel){
-            List<Pessoa> Hospedes = new List<Pessoa>(1);
+            Hospedes = new List<Pessoa>(1);
             Hospedes.Add(responsavel);
             this.Suite = suite;
             DiasReservados = 0;
