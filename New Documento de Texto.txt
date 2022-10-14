@@ -1,0 +1,21 @@
+Classes:
+Pessoa
+	Nome
+	Sobrenome
+
+Suite:
+	TipoSiote
+	Capacidade (não se pode reservar mais do que a capacidade)
+	ValorDiaria
+
+Reserva
+	Hospedes (lista)
+	Suite
+	Dias Resevados
+
+	Functions:
+		Cadastrar Hospedes
+		Cadastrar Suites
+		Obter Quandtidade hospedes
+		CalculaValorDiaria
+			(Caso igual ou maior que 10 dias = 10% de desconto)

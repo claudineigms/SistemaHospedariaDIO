@@ -1,0 +1,5 @@
+bin/
+obj/
+files/pessoas.json
+files/reserva.json
+files/suites.json
