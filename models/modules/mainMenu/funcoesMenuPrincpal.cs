@@ -29,6 +29,7 @@ namespace projetoHospedagemHotel.models
             else
             {
                 funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Não há clientes listados!");
+                throw new NullReferenceException();
             }
         }
 
@@ -47,28 +48,33 @@ namespace projetoHospedagemHotel.models
             else
             {
                 funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Não há suites listadas!");
+                throw new NullReferenceException();
             }
         }
 
-        public static void ListarReservas(string texto){
+        public static void ListarReservas(string texto)
         {
-            if (FuncoesDados.ListaReservas.Count() > 0)
             {
-                Console.WriteLine(texto);
-                int contador = 1;
-                foreach (Reserva reserva in FuncoesDados.ListaReservas)
+                if (FuncoesDados.ListaReservas.Count() > 0)
                 {
+                    Console.WriteLine(texto);
+                    int contador = 1;
+                    foreach (Reserva reserva in FuncoesDados.ListaReservas)
+                    {
                         string Hospedes = Convert.ToString(reserva.QuantidadeHospedes());
-                        string Responsavel = reserva.Hospedes[0].nomecompleto;
-                        Console.WriteLine($"{contador} - Suite:{reserva.Suite.TipoSuite} | Responsável: {Responsavel} | Capacidade: {reserva.Suite.Capacidade} | Hospedes: {Hospedes} | Diárias: {reserva.DiasReservados}");
-                    contador++;
+                        string Responsavel = "";
+                        if (reserva.Hospedes.Count > 0)
+                        { Responsavel = reserva.Hospedes[0].nomecompleto; }
+                        Console.WriteLine($"{contador} - Suite: {reserva.Suite.TipoSuite} | Responsável: {Responsavel} | Capacidade: {reserva.Suite.Capacidade} | Hospedes: {Hospedes} | Diárias: {reserva.DiasReservados}");
+                        contador++;
+                    }
+                }
+                else
+                {
+                    funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Não há suites listadas!");
+                    throw new NullReferenceException();
                 }
             }
-            else
-            {
-                funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Não há suites listadas!");
-            }
-        }
         }
     }
 }

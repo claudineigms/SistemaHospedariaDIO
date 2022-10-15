@@ -31,12 +31,17 @@ namespace projetoHospedagemHotel.models{
                         break;
                     }
 
-                    new Suite(nome, capacidade,Math.Round(valorSuite,2));
+                    try
+                    {
+                        new Suite(nome, capacidade, Math.Round(valorSuite, 2));
+                    } catch(Exception e){
+                        funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, e.Message);
+                    }
                     Console.Clear();
                     break;
 
                 case "2": //Altera a capacidade
-                    funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:");
+                    try { funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:"); }catch { break;}
 
                     if (int.TryParse(Console.ReadLine(), out int suiteaalterarcapacidade))
                     {
@@ -49,11 +54,11 @@ namespace projetoHospedagemHotel.models{
                         try
                         {
                             FuncoesDados.ListaSuites[suiteaalterarcapacidade - 1].atualizarCapacidade(novacapacidade);
-                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Green, "Suite alterada com sucesso!");
+                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Green, "Capacidade alterada com sucesso!");
                         }
-                        catch
+                        catch (Exception e)
                         {
-                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Suite Inválida");
+                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, e.Message);
                         }
                     }
                     else
@@ -63,7 +68,7 @@ namespace projetoHospedagemHotel.models{
                     break;
 
                 case "3": //Altera o valor
-                        funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:");
+                    try { funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:"); }catch { break; }
 
                     if (int.TryParse(Console.ReadLine(), out int suiteaalterarvalor))
                     {
@@ -78,11 +83,11 @@ namespace projetoHospedagemHotel.models{
                         try
                         {
                             FuncoesDados.ListaSuites[suiteaalterarvalor - 1].atualizarValorDiaria(novovalorSuite);
-                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Green, "Suite removida com sucesso!");
+                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Green, "Valor atualizado com sucesso!");
                         }
-                        catch
+                        catch(Exception e)
                         {
-                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, "Suite Inválida");
+                            funcoesMenuPrincipal.FuncaoInformacao(ConsoleColor.Red, e.Message);
                         }
                     }
                     else
@@ -92,7 +97,7 @@ namespace projetoHospedagemHotel.models{
                     break;
                 
                 case "4": //Remove a Suite
-                        funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:");
+                    try { funcoesMenuPrincipal.ListarSuites("Informe A suite que deseja remover:"); }catch { break; }
 
                     if (int.TryParse(Console.ReadLine(), out int suitearemover))
                     {

@@ -2,48 +2,69 @@ namespace projetoHospedagemHotel.models
 {
     public class Reserva
     {
-        public Reserva(Suite suite, Pessoa responsavel){
-            Hospedes = new List<Pessoa>(1);
+        public Reserva(Suite suite, Pessoa responsavel, int diarias){
+            _Hospedes = new List<Pessoa>();
+            Hospedes = new List<Pessoa>();
             Hospedes.Add(responsavel);
             this.Suite = suite;
-            DiasReservados = 0;
+            DiasReservados = diarias;
             FuncoesDados.adicionarreserva(this);
         }
 
-        public List<Pessoa> Hospedes{ get; set; }
+        private List<Pessoa> _Hospedes;
         private Suite _Suite;
+        private int _DiasReservados;
+
+        public List<Pessoa> Hospedes{ get{return _Hospedes;} set{_Hospedes = value;} }
         public Suite Suite {
-            get
-            {
+            get{
                 return _Suite;
-            }
-            set
-            {
+            }set{
+                if (this.Suite == value){
+                    throw new ArgumentException("Esta suíte ja está selecionada!");
+                }
+                if (Hospedes.Count() > value.Capacidade){
+                    this.Hospedes = new List<Pessoa> { Hospedes[0] };
+                }
                 _Suite = value;
             }
         }
-        public int DiasReservados { get; set; }
+        public int DiasReservados{ 
+            get
+            {
+                return _DiasReservados;
+            }
+            set
+            {
+                if (value < 0)
+                {throw new ArgumentException("O valor deve ser igual ou maior que 0");
+                }
+                else { _DiasReservados = value; }
+            }
+        }
+        public bool finalizado = false;
 
         public bool CadastrarHospede(Pessoa hospede){
             if (Suite == null){
-                Console.WriteLine("Não é possível Cadastrar um hóspede sem inserir uma Suíte");
-                return false;
-            }else if (this.Hospedes.Count() <= Suite.Capacidade){
-                Console.WriteLine("Não é possível inserir uma pessoa pois o limite ultrapassa o tamanho");
-                return false;
+                throw new ArgumentException("Não é possível Cadastrar um hóspede sem inserir uma Suíte");
+            }else if(Hospedes.Contains(hospede)){
+                throw new Exception("Esta pessoa já está cadastrada na lista!");
+            }else if (this.Hospedes.Count() >= this.Suite.Capacidade){
+                throw new NotSupportedException("Não é possível inserir uma pessoa pois o limite ultrapassa o tamanho");
             }else{
                 Hospedes.Add(hospede);
                 return true;
             }
         }
 
-        public bool CadastrarDias(int dias){
-            if (dias <= 0){
-                Console.WriteLine("Favor cadastrar um valor maior que 0");
-                return false;
+        public bool RemoverHospede(Pessoa hospede){
+            if(this.Hospedes.Count() <= 0){
+                throw new MissingMemberException("Não há hóspedes na lista!");
             }
-            this.DiasReservados = dias;
-            return true;
+            else{
+                this.Hospedes.Remove(hospede);
+                return true;
+            }
         }
 
         public int RetornarCapacidade(){
@@ -72,9 +93,9 @@ namespace projetoHospedagemHotel.models
         public double ValorReserva(){
             double Valor = 0.00f;
             if (this.DiasReservados <= 0){
-                Console.WriteLine("Verificar o valor de dias reservado cadastrado");
-            }else if(Suite != null){
-                Console.WriteLine("É necessário que se cadastre uma suíte");
+                throw new Exception("Verificar o valor de dias reservado cadastrado");
+            }else if(Suite == null){
+                throw new Exception("É necessário que se cadastre uma suíte");
             }
             Valor = this.DiasReservados * this.Suite.ValorDiaria;
 

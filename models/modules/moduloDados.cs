@@ -11,6 +11,7 @@ namespace projetoHospedagemHotel.models
         public static List<Pessoa> ListaPessoas = new List<Pessoa>();
         public static List<Suite> ListaSuites = new List<Suite>();
         public static List<Reserva> ListaReservas = new List<Reserva>();
+        public static List<Reserva> ListaReservasFechadas = new List<Reserva>();
 
         public static void VerificarArquivos(){
             if (!File.Exists("files/pessoas.json")){
@@ -76,6 +77,12 @@ namespace projetoHospedagemHotel.models
         public static void removerpessoa(Pessoa p){
             ListaPessoas.Remove(p);
             //salvarpessoas();
+        }
+
+        public static void adicionarreservafechada(Reserva r){
+            ListaReservas.Remove(r);
+            ListaReservasFechadas.Add(r);
+            //salvarReserva();
         }
 
         public static void adicionarreserva(Reserva r){

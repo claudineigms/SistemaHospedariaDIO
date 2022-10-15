@@ -35,8 +35,8 @@ namespace projetoHospedagemHotel.models
                     break;
 
                 case "2": //Remove uma pessoa
-                    funcoesMenuPrincipal.ListarClientes("Informe o cliente que deseja remover:");
-                        if (int.TryParse(Console.ReadLine(), out int clientearemover))
+                    try { funcoesMenuPrincipal.ListarClientes("Informe o cliente que deseja remover:"); }catch { break; };
+                    if (int.TryParse(Console.ReadLine(), out int clientearemover))
                         {
                             try
                             {
